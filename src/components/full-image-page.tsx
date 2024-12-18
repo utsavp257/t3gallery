@@ -1,7 +1,10 @@
+import { clerkClient } from "@clerk/nextjs/server";
 import { getImage } from "~/server/queries";
 
 export default async function FullPageImageView(props: {id: number}) {
   const image = await getImage(props.id);
+  const client = await clerkClient();
+  const uploaderInfo = await client.users.getUser(image.userId);
 
   return (
 
@@ -14,7 +17,7 @@ export default async function FullPageImageView(props: {id: number}) {
 
       <div className="p-2">
         <div>Uploaded By:</div>
-        {/* { <div>{userInfo.fullName}</div> } */}
+        { <div>{uploaderInfo.fullName}</div> }
       </div>
 
       <div className="p-2">
