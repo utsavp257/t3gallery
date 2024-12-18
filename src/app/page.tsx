@@ -2,12 +2,13 @@ import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
 import { db } from "~/server/db";
 
+import { getMyImages } from "~/server/queries";
+
 export const dynamic = "force-dynamic";
  
 async function Images(){
-  const images = await db.query.images.findMany({
-    orderBy: (model, { desc }) => desc(model.id),
-  });
+
+  const images = await getMyImages();
 
   return(
     <div className="flex flex-wrap gap-4">
@@ -23,20 +24,6 @@ async function Images(){
   );
 };
 
-const mockUrls = [
-  "https://utfs.io/f/LxqRyZPzYaceDe2baEtrgyw6FavhZo8LYUx1QnO09zBfsiH3",
-  "https://utfs.io/f/LxqRyZPzYacek7PagicqTmMlXEOiCLfZc3Ajs1x6FvYdwGW9",
-  "https://utfs.io/f/LxqRyZPzYaceM8m6NdUbkNmPYIGpLchSaQBE8g43U76nZVXj",
-  "https://utfs.io/f/LxqRyZPzYaceiADlaNP5TFqtOD7z1A9vQ6j5aKWUIgLSb3Rr",
-  "https://utfs.io/f/LxqRyZPzYaceDe2baEtrgyw6FavhZo8LYUx1QnO09zBfsiH3",
-  "https://utfs.io/f/LxqRyZPzYacek7PagicqTmMlXEOiCLfZc3Ajs1x6FvYdwGW9",
-  "https://utfs.io/f/LxqRyZPzYaceM8m6NdUbkNmPYIGpLchSaQBE8g43U76nZVXj",
-  "https://utfs.io/f/LxqRyZPzYaceiADlaNP5TFqtOD7z1A9vQ6j5aKWUIgLSb3Rr",
-  "https://utfs.io/f/LxqRyZPzYaceDe2baEtrgyw6FavhZo8LYUx1QnO09zBfsiH3",
-  "https://utfs.io/f/LxqRyZPzYacek7PagicqTmMlXEOiCLfZc3Ajs1x6FvYdwGW9",
-  "https://utfs.io/f/LxqRyZPzYaceM8m6NdUbkNmPYIGpLchSaQBE8g43U76nZVXj",
-  "https://utfs.io/f/LxqRyZPzYaceiADlaNP5TFqtOD7z1A9vQ6j5aKWUIgLSb3Rr"
-];
 
 
 export default async function HomePage() {
