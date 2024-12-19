@@ -35,7 +35,12 @@ export async function deleteImage(id: number) {
   
   if (!user.userId) throw new Error("Unauthorized");
 
-  await db.delete(images).where(and(eq(images.id, id), eq(images.userId, user.userId)));
+  const image = await db.query.images.findFirst({
+    where: and(eq(images.id, id), eq(images.userId, user.userId)),
+  });
+  if (!image) throw new Error("Image not found");
+
+  await db.delete(images).where(eq(images.id, id));
 
   analyticsServerClient.capture({
     distinctId: user.userId,
@@ -49,3 +54,4 @@ export async function deleteImage(id: number) {
   //revalidatePath("/");
   redirect("/");
 }
+
