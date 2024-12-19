@@ -14,22 +14,19 @@ export const ourFileRouter = {
   imageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 40 } })
     // Set permissions and file types for this FileRoute
     .middleware(async ({ req }) => {
-      // This code runs on your server before upload
-      const user = auth();
+        const user = await auth();
 
-      // If you throw, the user will not be able to upload
-      if (!(await user).userId) throw new UploadThingError("Unauthorized");
+        if (!(user).userId) throw new UploadThingError("Unauthorized");
 
-      // await db.insert(images).values({
-      //   name: '13.png',
-      //   url: 'https://utfs.io/f/LxqRyZPzYaceDe2baEtrgyw6FavhZo8LYUx1QnO09zBfsiH3',
-      //   userId: '231234',
-      // });
-      // console.log("db workedddd")
-      //  console.log( (await user).userId )
-       
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: (await user).userId };
+        // await db.insert(images).values({
+        //   name: '13.png',
+        //   url: 'https://utfs.io/f/LxqRyZPzYaceDe2baEtrgyw6FavhZo8LYUx1QnO09zBfsiH3',
+        //   userId: '231234',
+        // });
+        // console.log("db workedddd")
+        //  console.log( (await user).userId )
+        
+        return { userId: (user).userId };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       try {
