@@ -79,7 +79,7 @@ export function SimpleUploadButton() {
         },
         onClientUploadComplete(res){
             toast.dismiss("upload-begin");
-            toast("Upload Complete!", {
+            toast(<span className="text-lg"> Upload Complete! </span>, {
                 duration: 1000,
             });
             router.refresh();
