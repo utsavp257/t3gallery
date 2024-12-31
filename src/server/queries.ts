@@ -5,7 +5,6 @@ import { images } from "./db/schema";
 import { redirect } from "next/navigation";
 import { and, eq } from "drizzle-orm";
 import analyticsServerClient from './analytics';
-import { NextResponse } from 'next/server';
 
 export async function getMyImages() {
 
