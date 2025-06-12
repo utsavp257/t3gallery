@@ -9,6 +9,13 @@ export default async function FullPageImageView(props: {id: number}) {
   const client = await clerkClient();
   const uploaderInfo = await client.users.getUser(image.userId);
 
+  const handleDelete = async () => {
+    "use server";
+    const result = await deleteImage(props.id);
+    console.log(result,"result");
+    redirect("/");
+  };
+
   return (
 
     <div className="flex h-full w-screen min-w-0 items-center justify-center text-white">
@@ -29,13 +36,13 @@ export default async function FullPageImageView(props: {id: number}) {
       </div>
 
       <div className="p-2">
-        <form action={async () => {
+        {/* <form action={async () => {
               "use server";
               await deleteImage(props.id);
               redirect("/");
-            }}> 
-        <Button type="submit" variant="destructive">Delete</Button>
-        </form>
+            }}>  */}
+        <Button onClick={handleDelete} type="submit" variant="destructive">Delete</Button>
+        {/* </form> */}
       </div>
 
     </div>

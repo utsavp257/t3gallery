@@ -39,6 +39,7 @@ export async function deleteImage(id: number) {
     const image = await db.query.images.findFirst({
       where: and(eq(images.id, id), eq(images.userId, user.userId)),
     });
+    console.log(image,"image123");
     if (!image) redirect("/");
 
     await db.delete(images).where(eq(images.id, id));
